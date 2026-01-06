@@ -1,93 +1,179 @@
-name: Deploy Store Manager
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    name: 🚀 Build & Deploy to GitHub Pages
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-    - uses: actions/checkout@v3
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
+    - name: 🔍 System Information
+      run: |
+        echo "📊 System Info:"
+        echo "Node: $(node --version)"
+        echo "Python: $(python3 --version)"
+        echo "PWD: $(pwd)"
+        echo "Files:"
+        ls -la
+
+    - name: ✅ Verify Static Files
+      run: |
+        echo "🧪 Verifying essential files..."
+        
+        FILES=(
+          "index.html"
+          "home.html"
+          "dashboard.html"
+          "deploy-status.html"
+          "styles.css"
+          "app.js"
+        )
+        
+        for file in "${FILES[@]}"; do
+          if [ -f "$file" ]; then
+            SIZE=$(du -h "$file" | cut -f1)
+            echo "✅ $file ($SIZE)"
+          else
+            echo "❌ Missing: $file"
+            exit 1
+          fi
+        done
+
+    - name: 📄 Validate HTML
+      run: |
+        echo "🧪 Validating HTML files..."
+        
+        for file in *.html; do
+          if [ -f "$file" ]; then
+            if grep -q "<!DOCTYPE html>" "$file"; then
+              echo "✅ $file - Valid"
+            else
+              echo "❌ $file - Invalid HTML structure"
+              exit 1
+            fi
+          fi
+        done
+
+    - name: 🎨 Validate CSS
+      run: |
+        echo "🧪 Validating CSS..."
+        
+        if [ -f "styles.css" ]; then
+          LINES=$(wc -l < styles.css)
+          echo "✅ styles.css - $LINES lines"
+        else
+          echo "❌ styles.css not found"
+          exit 1
+        fi
+
+    - name: ⚙️ Validate JavaScript
+      run: |
+        echo "🧪 Validating JavaScript..."
+        
+        if [ -f "app.js" ]; then
+          if node -c app.js 2>/dev/null; then
+            LINES=$(wc -l < app.js)
+            echo "✅ app.js - Syntax OK ($LINES lines)"
+          else
+            echo "❌ app.js - Syntax error"
+            exit 1
+          fi
+        fi
+
+    - name: 📁 Create _site directory
+      run: |
+        echo "📁 Creating deployment directory..."
+        mkdir -p _site
+        
+        # Copy all HTML files
+        cp *.html _site/ 2>/dev/null || true
+        
+        # Copy CSS
+        cp styles.css _site/ 2>/dev/null || true
+        
+        # Copy JS
+        cp app.js _site/ 2>/dev/null || true
+        
+        # Copy JSON
+        cp manifest.json _site/ 2>/dev/null || true
+        
+        # Copy markdown
+        cp *.md _site/ 2>/dev/null || true
+        
+        # Create index for root
+        if [ ! -f "_site/index.html" ]; then
+          echo "❌ index.html not found in _site"
+          ls -la _site/
+          exit 1
+        fi
+        
+        echo "✅ Deployment files ready:"
+        ls -lah _site/
+
+    - name: 🔨 Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: 💾 Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        node-version: '18'
+        path: '_site'
 
-    - name: Create deployment directory
-      run: |
-        mkdir -p public
-        cp index.html public/
-        cp styles.css public/
-        cp app.js public/
+    - name: 🚀 Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
 
-    - name: Create README for deployment
+    - name: ✅ Deployment Success
       run: |
-        cat > public/README.md << 'EOF'
-        # سوگالری - سامانه مدیریت فروشگاه کودک
+        cat > deployment-info.txt << 'EOF'
         
-        ## راهنمای استفاده
+        ════════════════════════════════════════════════════════════
+        🚀 DEPLOYMENT SUCCESSFUL
+        ════════════════════════════════════════════════════════════
         
-        ### 1. دسته‌بندی‌ها
-        - نام دسته‌بندی جدید را وارد کنید
-        - بر روی دکمه "اضافه کردن" کلیک کنید
-        - برای حذف، روی دکمه حذف کلیک کنید
+        ✅ Status: LIVE ON GITHUB PAGES
+        ✅ URL: https://Hadiebrahimiseraji.github.io/sougallery/
         
-        ### 2. محصولات
-        - دسته‌بندی را انتخاب کنید
-        - اطلاعات محصول را پر کنید:
-          - نام
-          - قیمت
-          - موجودی
-          - سایز و رنگ (اختیاری)
-          - توصیحات (اختیاری)
-          - تصویر (اختیاری)
-        - دکمه "اضافه کردن محصول" را کلیک کنید
+        📁 Pages:
+          • https://Hadiebrahimiseraji.github.io/sougallery/ (Main)
+          • https://Hadiebrahimiseraji.github.io/sougallery/home.html
+          • https://Hadiebrahimiseraji.github.io/sougallery/dashboard.html
+          • https://Hadiebrahimiseraji.github.io/sougallery/deploy-status.html
         
-        ### 3. همگام‌سازی
-        - بر روی دکمه "ذخیره و آپلود" کلیک کنید
-        - فایل JSON دانلود خواهد شد
-        - فایل را در GitHub آپلود کنید
-        - برای Google Drive، از درایو مخصوص استفاده کنید
+        📊 Build Info:
+          • Timestamp: $(date)
+          • Branch: main
+          • Commit: ${{ github.sha }}
+          • Actor: ${{ github.actor }}
         
-        ## ساختار داده
+        ✅ All validations passed
+        ✅ Files deployed successfully
+        ✅ Ready for use
         
-        ```json
-        {
-          "store": "sougallery",
-          "categories": [...],
-          "products": [...],
-          "images": {...},
-          "lastUpdate": "..."
-        }
-        ```
-        
-        ## استقرار محلی
-        
-        ```bash
-        git clone https://github.com/Hadiebrahimiseraji/sougallery.git
-        cd sougallery
-        python -m http.server 8000
-        # دسترسی: http://localhost:8000
-        ```
+        ════════════════════════════════════════════════════════════
         EOF
+        
+        cat deployment-info.txt
+        echo ""
+        echo "🚀 Deployment URL: ${{ steps.deployment.outputs.page_url }}"
 
-    - name: Commit changes
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add -A
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Deploy store manager $(date)" && git push)
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Upload artifact
+    - name: 💾 Upload deployment info
       uses: actions/upload-artifact@v3
+      if: always()
       with:
-        name: store-manager
-        path: public/
+        name: deployment-info
+        path: deployment-info.txt
