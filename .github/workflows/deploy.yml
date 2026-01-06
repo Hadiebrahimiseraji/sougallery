@@ -1,0 +1,93 @@
+name: Deploy Store Manager
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Create deployment directory
+      run: |
+        mkdir -p public
+        cp index.html public/
+        cp styles.css public/
+        cp app.js public/
+
+    - name: Create README for deployment
+      run: |
+        cat > public/README.md << 'EOF'
+        # سوگالری - سامانه مدیریت فروشگاه کودک
+        
+        ## راهنمای استفاده
+        
+        ### 1. دسته‌بندی‌ها
+        - نام دسته‌بندی جدید را وارد کنید
+        - بر روی دکمه "اضافه کردن" کلیک کنید
+        - برای حذف، روی دکمه حذف کلیک کنید
+        
+        ### 2. محصولات
+        - دسته‌بندی را انتخاب کنید
+        - اطلاعات محصول را پر کنید:
+          - نام
+          - قیمت
+          - موجودی
+          - سایز و رنگ (اختیاری)
+          - توصیحات (اختیاری)
+          - تصویر (اختیاری)
+        - دکمه "اضافه کردن محصول" را کلیک کنید
+        
+        ### 3. همگام‌سازی
+        - بر روی دکمه "ذخیره و آپلود" کلیک کنید
+        - فایل JSON دانلود خواهد شد
+        - فایل را در GitHub آپلود کنید
+        - برای Google Drive، از درایو مخصوص استفاده کنید
+        
+        ## ساختار داده
+        
+        ```json
+        {
+          "store": "sougallery",
+          "categories": [...],
+          "products": [...],
+          "images": {...},
+          "lastUpdate": "..."
+        }
+        ```
+        
+        ## استقرار محلی
+        
+        ```bash
+        git clone https://github.com/Hadiebrahimiseraji/sougallery.git
+        cd sougallery
+        python -m http.server 8000
+        # دسترسی: http://localhost:8000
+        ```
+        EOF
+
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Deploy store manager $(date)" && git push)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: store-manager
+        path: public/
