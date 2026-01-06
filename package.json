@@ -1,0 +1,20 @@
+{
+  "name": "sougallery",
+  "version": "1.0.0",
+  "description": "سامانه مدیریت فروشگاه کودک",
+  "main": "api-backend.js",
+  "scripts": {
+    "start": "node api-backend.js",
+    "dev": "node api-backend.js",
+    "sync": "bash sync.sh"
+  },
+  "keywords": [
+    "store",
+    "management",
+    "products",
+    "categories"
+  ],
+  "author": "Hadiebrahimiseraji",
+  "license": "MIT",
+  "dependencies": {}
+}
