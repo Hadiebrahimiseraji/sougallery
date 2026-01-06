@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوغالری - مدیریت فروشگاه</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📦 سوغالری - سامانه مدیریت فروشگاه کودک</h1>
+            <p class="subtitle">مدیریت آسان محصولات، دسته‌بندی‌ها و تصاویر</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="categories">دسته‌بندی‌ها</button>
+            <button class="tab-btn" data-tab="products">محصولات</button>
+            <button class="tab-btn" data-tab="sync">وضعیت همگام‌سازی</button>
+        </nav>
+
+        <div class="tab-content">
+            <div id="categories-tab" class="tab active">
+                <div class="section-header">
+                    <h2>مدیریت دسته‌بندی‌ها</h2>
+                </div>
+
+                <div class="form-group">
+                    <label>نام دسته‌بندی جدید:</label>
+                    <div class="input-group">
+                        <input type="text" id="newCategory" placeholder="مثال: پوشاک، اسباب‌بازی، کتاب‌ها">
+                        <button class="btn btn-primary" onclick="addCategory()">➕ اضافه کردن</button>
+                    </div>
+                </div>
+
+                <div class="categories-list">
+                    <h3>دسته‌بندی‌های موجود:</h3>
+                    <ul id="categoryList"></ul>
+                </div>
+            </div>
+
+            <div id="products-tab" class="tab">
+                <div class="section-header">
+                    <h2>مدیریت محصولات</h2>
+                </div>
+
+                <div class="filter-group">
+                    <label>فیلتر بر اساس دسته‌بندی:</label>
+                    <select id="categoryFilter" onchange="filterProducts()">
+                        <option value="">همه دسته‌بندی‌ها</option>
+                    </select>
+                </div>
+
+                <div class="add-product-form">
+                    <h3>افزودن محصول جدید</h3>
+                    
+                    <div class="form-group">
+                        <label>دسته‌بندی:</label>
+                        <select id="productCategory" required>
+                            <option value="">انتخاب دسته‌بندی</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>نام محصول:</label>
+                        <input type="text" id="productName" placeholder="نام محصول">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>قیمت (تومان):</label>
+                            <input type="number" id="productPrice" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>موجودی:</label>
+                            <input type="number" id="productStock" placeholder="0" min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>سایز:</label>
+                            <input type="text" id="productSize" placeholder="مثال: S, M, L">
+                        </div>
+                        <div class="form-group">
+                            <label>رنگ:</label>
+                            <input type="text" id="productColor" placeholder="مثال: قرمز، آبی">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>توضیحات:</label>
+                        <textarea id="productDescription" placeholder="توضیحات محصول" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>تصویر محصول:</label>
+                        <input type="file" id="productImage" accept="image/*">
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+
+                    <button class="btn btn-success" onclick="addProduct()">➕ افزودن محصول</button>
+                </div>
+
+                <div class="products-list">
+                    <h3>لیست محصولات</h3>
+                    <div id="productsList"></div>
+                </div>
+            </div>
+
+            <div id="sync-tab" class="tab">
+                <div class="section-header">
+                    <h2>وضعیت همگام‌سازی</h2>
+                </div>
+
+                <div class="sync-info">
+                    <div class="status-item">
+                        <span class="status-label">آخرین همگام‌سازی:</span>
+                        <span id="lastSync" class="status-value">-</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">تعداد محصولات:</span>
+                        <span id="productCount" class="status-value">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">تعداد دسته‌بندی‌ها:</span>
+                        <span id="categoryCount" class="status-value">0</span>
+                    </div>
+                </div>
+
+                <div class="sync-actions">
+                    <button class="btn btn-primary" onclick="saveToDB()">💾 ذخیره و آپلود</button>
+                    <button class="btn btn-secondary" onclick="exportJSON()">📥 دانلود JSON</button>
+                    <button class="btn btn-secondary" onclick="clearAllData()">🗑️ حذف تمام داده‌ها</button>
+                </div>
+
+                <div id="syncLog" class="sync-log"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
