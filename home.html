@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوغاللری - صفحه اصلی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #10b981;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .main-card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #667eea;
+        }
+
+        .main-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-card.store {
+            border-top-color: #667eea;
+        }
+
+        .main-card.dashboard {
+            border-top-color: #10b981;
+        }
+
+        .main-card.deploy {
+            border-top-color: #f59e0b;
+        }
+
+        .main-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .main-card h2 {
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 1.5em;
+        }
+
+        .main-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .btn-large {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .features {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .features h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature h3 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .quick-access {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-access h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: background 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .quick-link:hover {
+            background: #e5e7eb;
+        }
+
+        .quick-link span {
+            font-size: 1.5em;
+        }
+
+        .quick-link div {
+            flex: 1;
+        }
+
+        .link-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.95em;
+        }
+
+        .link-desc {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        .status {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .status h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+        }
+
+        .status-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .status-item {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .status-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .status-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .main-card h2 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>📦 سوغاللری</h1>
+            <p>سامانه مدیریت فروشگاه کودک</p>
+            <p class="tagline">بر روی GitHub Pages استقرار یافته</p>
+        </div>
+
+        <div class="main-grid">
+            <div class="main-card store">
+                <div class="icon">📋</div>
+                <h2>سامانه مدیریت</h2>
+                <p>راهنما سامانه مدیریت شوید و محصولات خود را مدیریت کنید</p>
+                <a href="index.html" class="btn-large">ورود</a>
+            </div>
+
+            <div class="main-card dashboard">
+                <div class="icon">📊</div>
+                <h2>داشبورد</h2>
+                <p>وضعیت به روزرسانی و اطلاعات استقرار را ببینید</p>
+                <a href="dashboard.html" class="btn-large">باز کردن</a>
+            </div>
+
+            <div class="main-card deploy">
+                <div class="icon">🚀</div>
+                <h2>وضعیت استقرار</h2>
+                <p>وضعیت فعال استقرار و GitHub Actions را مراقبت کنید</p>
+                <a href="deploy-status.html" class="btn-large">وضعیت</a>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>🌟 ویژگی‌ها</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>✅ مدیریت دسته‌بندی</h3>
+                    <p>اضافه و حذف دسته‌بندی‌ها به راحتی</p>
+                </div>
+                <div class="feature">
+                    <h3>📋 مدیریت محصولات</h3>
+                    <p>اطلاعات محصول را به‌راحتی مدیریت کنید</p>
+                </div>
+                <div class="feature">
+                    <h3>📄 آپلود تصویر</h3>
+                    <p>تصاویر محصولات را به‌راحتی آپلود کنید</p>
+                </div>
+                <div class="feature">
+                    <h3>📋 ذخیره‌سازی</h3>
+                    <p>داده‌ها را افزونە‌ماتولی ذخیره کنید</p>
+                </div>
+                <div class="feature">
+                    <h3>🔗 GitHub هماهنگ</h3>
+                    <p>خودکار به GitHub ارسال می‌کند</p>
+                </div>
+                <div class="feature">
+                    <h3>🏢 GitHub Pages</h3>
+                    <p>بر روی GitHub Pages منتشر می‌شود</p>
+                </div>
+                <div class="feature">
+                    <h3>🚀 CI/CD</h3>
+                    <p>خودکار تست و استقرار</p>
+                </div>
+                <div class="feature">
+                    <h3>🎉 100% موفق</h3>
+                    <p>تمام تست‌ها موفق</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="status">
+            <h2>📋 وضعیت‌گزار</h2>
+            <div class="status-items">
+                <div class="status-item">
+                    <div class="status-number">12</div>
+                    <div class="status-label">تست موفق</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-number">8</div>
+                    <div class="status-label">فایل آماده</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-number">100%</div>
+                    <div class="status-label">موفقیت</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-number">3</div>
+                    <div class="status-label">Workflows</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-access">
+            <h2>🔗 دسترسی سریع</h2>
+            <div class="quick-links">
+                <a href="index.html" class="quick-link">
+                    <span>📋</span>
+                    <div>
+                        <div class="link-title">سامانه</div>
+                        <div class="link-desc">راهنما رفتن</div>
+                    </div>
+                </a>
+                <a href="dashboard.html" class="quick-link">
+                    <span>📊</span>
+                    <div>
+                        <div class="link-title">داشبورد</div>
+                        <div class="link-desc">وضعیت مراقبە</div>
+                    </div>
+                </a>
+                <a href="deploy-status.html" class="quick-link">
+                    <span>🚀</span>
+                    <div>
+                        <div class="link-title">استقرار</div>
+                        <div class="link-desc">وضعیت جزئیات</div>
+                    </div>
+                </a>
+                <a href="README.md" class="quick-link">
+                    <span>📄</span>
+                    <div>
+                        <div class="link-title">مستندات</div>
+                        <div class="link-desc">راهنمای کامل</div>
+                    </div>
+                </a>
+                <a href="https://github.com/Hadiebrahimiseraji/sougallery" target="_blank" class="quick-link">
+                    <span>🔗</span>
+                    <div>
+                        <div class="link-title">GitHub</div>
+                        <div class="link-desc">Repository</div>
+                    </div>
+                </a>
+                <a href="https://github.com/Hadiebrahimiseraji/sougallery/actions" target="_blank" class="quick-link">
+                    <span>⚙️</span>
+                    <div>
+                        <div class="link-title">Actions</div>
+                        <div class="link-desc">Workflows</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📦 سوغاللری - سامانه مدیریت فروشگاه کودک</p>
+            <p>استقرار بر <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+            <p>راهنمای: <a href="DEPLOYMENT.md" target="_blank">DEPLOYMENT.md</a></p>
+            <p style="margin-top: 20px; opacity: 0.9; font-size: 0.85em;">💻 ساخته‌شده با HTML, CSS, JavaScript | منتشر‌شده با GitHub Actions</p>
+        </div>
+    </div>
+</body>
+</html>
