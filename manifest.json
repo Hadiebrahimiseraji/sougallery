@@ -1,0 +1,67 @@
+{
+  "name": "سوغاللری - سامانه مدیریت فروشگاه کودک",
+  "short_name": "سوغاللری",
+  "description": "سامانه خودکار مدیریت محصولات، دسته‌بندی‌ها و تصاویر فروشگاه کودک",
+  "start_url": "https://Hadiebrahimiseraji.github.io/sougallery/home.html",
+  "scope": "https://Hadiebrahimiseraji.github.io/sougallery/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23667eea' width='192' height='192'/><text x='50%' y='50%' font-size='80' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>📦</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%23667eea' width='512' height='512'/><text x='50%' y='50%' font-size='200' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>📦</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "shortcuts": [
+    {
+      "name": "سامانه مدیریت",
+      "short_name": "راهنما",
+      "description": "وارد سامانه مدیریت",
+      "url": "https://Hadiebrahimiseraji.github.io/sougallery/index.html",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%238B5CF6' width='96' height='96'/><text x='50%' y='50%' font-size='40' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>📋</text></svg>",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "داشبورد",
+      "short_name": "داشبورد",
+      "description": "داشبورد مراقبە",
+      "url": "https://Hadiebrahimiseraji.github.io/sougallery/dashboard.html",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%2310b981' width='96' height='96'/><text x='50%' y='50%' font-size='40' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>📊</text></svg>",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "استقرار",
+      "short_name": "استقرار",
+      "description": "وضعیت استقرار",
+      "url": "https://Hadiebrahimiseraji.github.io/sougallery/deploy-status.html",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect fill='%23f59e0b' width='96' height='96'/><text x='50%' y='50%' font-size='40' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'>🚀</text></svg>",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
